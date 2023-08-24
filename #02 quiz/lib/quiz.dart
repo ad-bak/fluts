@@ -64,10 +64,10 @@ class _QuizState extends State<Quiz> {
             gradient: LinearGradient(
               colors: [
                 Color.fromARGB(255, 26, 2, 80),
-                Color.fromARGB(255, 255, 66, 0), // Orange-ish
+                Color.fromARGB(255, 255, 66, 0), //
               ],
-              begin: Alignment.topRight,
-              end: Alignment.bottomLeft,
+              begin: Alignment.topLeft,
+              end: Alignment.bottomRight,
             ),
           ),
           child: screenWidget,
