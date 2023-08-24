@@ -1,6 +1,6 @@
 import 'package:basics/models/quiz_question.dart';
 
-final questions = [
+const questions = [
   QuizQuestion(
     'What are the main building blocks of Flutter UIs?',
     [
@@ -50,6 +50,15 @@ final questions = [
       'By calling updateData()',
       'By calling updateUI()',
       'By calling updateState()',
+    ],
+  ),
+  QuizQuestion(
+    'What\'s the purpose of the build() method?',
+    [
+      'To build the UI',
+      'To build the data',
+      'To build the state',
+      'To build the widget',
     ],
   ),
 ];
