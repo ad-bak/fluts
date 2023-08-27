@@ -6,7 +6,7 @@ import 'package:flutter/rendering.dart';
 // import 'package:flutter/services.dart';
 
 var kColorScheme = ColorScheme.fromSeed(
-  seedColor: const Color.fromARGB(255, 96, 59, 181),
+  seedColor: Color.fromARGB(255, 0, 255, 81),
 );
 
 var kDarkColorScheme = ColorScheme.fromSeed(
