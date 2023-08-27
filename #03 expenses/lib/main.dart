@@ -1,12 +1,11 @@
 import 'package:app/widgets/expenses.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/rendering.dart';
 // import 'package:flutter/services.dart';
 
 // import 'package:flutter/services.dart';
 
 var kColorScheme = ColorScheme.fromSeed(
-  seedColor: Color.fromARGB(255, 0, 255, 81),
+  seedColor: const Color.fromARGB(255, 0, 255, 81),
 );
 
 var kDarkColorScheme = ColorScheme.fromSeed(
