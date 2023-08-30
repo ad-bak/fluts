@@ -23,16 +23,16 @@ class MainDrawer extends StatelessWidget {
             )),
             child: Row(
               children: [
-                Icon(
+                const Icon(
                   Icons.fastfood,
                   size: 48,
-                  color: Theme.of(context).colorScheme.primary,
+                  color: Colors.white,
                 ),
                 const SizedBox(width: 18),
                 Text(
                   'Cooking Up!',
                   style: Theme.of(context).textTheme.titleLarge!.copyWith(
-                        color: Theme.of(context).colorScheme.primary,
+                        color: Colors.white,
                       ),
                 )
               ],
