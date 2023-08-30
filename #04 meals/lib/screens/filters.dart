@@ -24,6 +24,7 @@ class _FiltersScreenState extends State<FiltersScreen> {
 
   @override
   void initState() {
+    super.initState();
     _glutenFreeFilterSet = widget.currentFilters[Filter.glutenFree]!;
     _lactoseFreeFilterSet = widget.currentFilters[Filter.lactoseFree]!;
     _vegetarianFilterSet = widget.currentFilters[Filter.vegetarian]!;
