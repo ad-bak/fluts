@@ -120,7 +120,7 @@ class _NewItemState extends State<NewItem> {
                         _formKey.currentState!.reset();
                       },
                       child: const Text('Reset')),
-                  Spacer(),
+                  const Spacer(),
                   ElevatedButton(
                       onPressed: _saveItem, child: const Text("Add Item"))
                 ],
