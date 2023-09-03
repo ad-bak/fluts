@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:places/providers/user_places.dart';
@@ -12,30 +14,30 @@ class AddPlaceScreen extends ConsumerStatefulWidget {
 
 class _AddPlaceScreen extends ConsumerState<AddPlaceScreen> {
   final _titleController = TextEditingController();
+  File? _selectedImage;
 
   void _savePlace() {
     final enteredText = _titleController.text;
 
-    if (enteredText.isEmpty) {
+    if (enteredText.isEmpty || _selectedImage == null) {
       showDialog(
-        context: context,
-        builder: (ctx) => AlertDialog(
-          title: const Text('Error'),
-          content: const Text('Please enter a valid title'),
-          actions: [
-            TextButton(
-              onPressed: () => Navigator.of(ctx).pop(),
-              child: const Text(
-                'Okay',
-                style: TextStyle(fontWeight: FontWeight.bold, fontSize: 18),
-              ),
-            )
-          ],
-        ),
-      );
+          context: context,
+          builder: (ctx) => AlertDialog(
+                title: const Text('Error'),
+                content:
+                    const Text('Please enter a title and select an image.'),
+                actions: [
+                  TextButton(
+                    onPressed: () => Navigator.of(context).pop(),
+                    child: const Text('Okay'),
+                  )
+                ],
+              ));
     }
 
-    ref.read(userPlacesProvider.notifier).addPlace(enteredText);
+    ref
+        .read(userPlacesProvider.notifier)
+        .addPlace(enteredText, _selectedImage!);
 
     Navigator.of(context).pop();
   }
@@ -64,7 +66,11 @@ class _AddPlaceScreen extends ConsumerState<AddPlaceScreen> {
               ),
             ),
             const SizedBox(height: 16),
-            const ImageInput(),
+            ImageInput(
+              onPickImage: (image) {
+                _selectedImage = image;
+              },
+            ),
             const SizedBox(height: 16),
             ElevatedButton.icon(
               onPressed: _savePlace,
