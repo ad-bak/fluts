@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "902984780555",
+    "firebase_url": "https://flutter-4254a-default-rtdb.europe-west1.firebasedatabase.app",
+    "project_id": "flutter-4254a",
+    "storage_bucket": "flutter-4254a.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:902984780555:android:7c5cc8daaa26fef7e5700e",
+        "android_client_info": {
+          "package_name": "com.example.chat"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "902984780555-vq7p91igjh8ob2obfudvf9c1qgc3idrb.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyB9yErAsaDJZsJQlqKDPYMXm-pZFUZQ1xo"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "902984780555-vq7p91igjh8ob2obfudvf9c1qgc3idrb.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
