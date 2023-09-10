@@ -1,6 +1,7 @@
 import 'dart:io';
 
 import 'package:chat/widgets/user_image_picker.dart';
+import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 
@@ -22,6 +23,7 @@ class _AuthScreenState extends State<AuthScreen> {
   var _enteredEmail = '';
   var _enteredPassword = '';
   File? _selectedImage;
+  var _isUploading = false;
 
   void _submit() async {
     final isValid = _form.currentState!.validate();
@@ -30,19 +32,28 @@ class _AuthScreenState extends State<AuthScreen> {
       return;
     }
 
-    if (!_isLogin && _selectedImage == null) {
+    if (_selectedImage == null) {
       ScaffoldMessenger.of(context).clearSnackBars();
       ScaffoldMessenger.of(context).showSnackBar(
         const SnackBar(
-          content: Text('Please pick an image.'),
+          content: Text(
+            'Please pick an image.',
+            style: TextStyle(
+              color: Colors.red,
+              fontSize: 300,
+            ),
+          ),
         ),
       );
-      return;
     }
 
     _form.currentState!.save();
 
     try {
+      setState(() {
+        _isUploading = true;
+      });
+
       if (_isLogin) {
         final userCredentials = await _firebase.signInWithEmailAndPassword(
             email: _enteredEmail, password: _enteredPassword);
@@ -50,7 +61,15 @@ class _AuthScreenState extends State<AuthScreen> {
       } else {
         final userCredentials = await _firebase.createUserWithEmailAndPassword(
             email: _enteredEmail, password: _enteredPassword);
-        print(userCredentials);
+
+        final storageRef = FirebaseStorage.instance
+            .ref()
+            .child('user_images')
+            .child('${userCredentials.user!.uid}.jpg');
+
+        await storageRef.putFile(_selectedImage!);
+        final imageUrl = await storageRef.getDownloadURL();
+        print(imageUrl);
       }
     } on FirebaseAuthException catch (error) {
       if (error.code == 'email-already-in-use') {
@@ -62,6 +81,9 @@ class _AuthScreenState extends State<AuthScreen> {
           content: Text(error.message ?? 'Authentication failed.'),
         ),
       );
+      setState(() {
+        _isUploading = false;
+      });
     }
   }
 
@@ -140,22 +162,26 @@ class _AuthScreenState extends State<AuthScreen> {
                   ),
                 ),
               ),
-              ElevatedButton(
-                onPressed: _submit,
-                style: ElevatedButton.styleFrom(
-                    backgroundColor: Colors.green[800]),
-                child: Text(_isLogin ? 'Login' : 'Sign Up'),
-              ),
-              TextButton(
-                onPressed: () {
-                  setState(() {
-                    _isLogin = !_isLogin;
-                  });
-                },
-                child: Text(_isLogin
-                    ? 'Create an account'
-                    : 'I already have an account'),
-              ),
+              if (_isUploading) const CircularProgressIndicator(),
+              if (!_isUploading)
+                ElevatedButton(
+                  onPressed: _submit,
+                  style: ElevatedButton.styleFrom(
+                      backgroundColor: Colors.green[800]),
+                  child: Text(_isLogin ? 'Login' : 'Sign Up'),
+                ),
+              if (_isUploading) const CircularProgressIndicator(),
+              if (!_isUploading)
+                TextButton(
+                  onPressed: () {
+                    setState(() {
+                      _isLogin = !_isLogin;
+                    });
+                  },
+                  child: Text(_isLogin
+                      ? 'Create an account'
+                      : 'I already have an account'),
+                ),
             ],
           ),
         ),
